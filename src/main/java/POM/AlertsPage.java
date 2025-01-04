@@ -2,6 +2,7 @@ package POM;
 
 import io.qameta.allure.Description;
 import io.qameta.allure.Step;
+import org.checkerframework.checker.units.qual.A;
 import org.openqa.selenium.*;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -11,12 +12,13 @@ public class AlertsPage {
     private WebDriver driver;
     private final By buttonAlerts = By.xpath(".//span[contains(text(),'Alerts')]");
 
-    private  final String[]arrayButtonAlertInPage=new String[]{
+    private final String[] arrayButtonAlertInPage = new String[]{
             "alertButton",
             "timerAlertButton",
             "confirmButton",
             "promtButton"
     };
+    private final By locatorText = By.id("confirmResult");
 
     public AlertsPage(WebDriver driver) {
         this.driver = driver;
@@ -24,16 +26,18 @@ public class AlertsPage {
 
     @Step
     @Description("Клик по кнопке Alert для отображения списка кнопок оконо")
-    public void clickButtonAlertOnLeftWindow(){
+    public void clickButtonAlertOnLeftWindow() {
         WebElement element = driver.findElement(buttonAlerts);
         ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView();", element);
         driver.findElement(buttonAlerts).click();
     }
+
     @Step
     @Description("Клик на кнопку вызывающую всплывающее окно")
-    public void clickButtonAlert(){
+    public void clickButtonAlert() {
         driver.findElement(By.id(arrayButtonAlertInPage[0])).click();
     }
+
     @Step
     @Description("Метод проверки, что всплывающее окно отобразилось")
     public boolean windowAllertIsVisible() {
@@ -62,41 +66,45 @@ public class AlertsPage {
         } catch (TimeoutException e) {
             // Обработка случая, когда алерт не появился в течение времени ожидания
             return false;
-        } catch (UnhandledAlertException e){
+        } catch (UnhandledAlertException e) {
             // Обработка случая, когда алерт ,блочит
             return true;
         }
     }
+
     @Step
     @Description("Нажатие кнопки ОК в всплывающем окне")
-    public void clickingOkInSimpleAlert(){
+    public void clickingOkInSimpleAlert() {
         Alert simpleAlert = driver.switchTo().alert();
         simpleAlert.accept();
     }
+
     @Step
     @Description("Метод проверки, что всплывающее окно не отображается")
-    public boolean isNotPresentAlert(){
-        try{
+    public boolean isNotPresentAlert() {
+        try {
             //если алерт найден возвращаем false
-            Alert alert=driver.switchTo().alert();
+            Alert alert = driver.switchTo().alert();
             alert.accept();
             return false;
-        }catch (NoAlertPresentException e){
+        } catch (NoAlertPresentException e) {
             //если алерт не отобразился возвращаем true
             return true;
-        }catch (UnhandledAlertException e ){
+        } catch (UnhandledAlertException e) {
             // если найден другой алерт возвращаем false
             return false;
         }
 
     }
+
     @Step
     @Description("Клик по кнопке всплывающего окна, где при нажатии кнопки предупреждение появится через 5 секунд.")
-    public void clickOnButtonWillAppearAfterFiveSeconds(){
+    public void clickOnButtonWillAppearAfterFiveSeconds() {
         driver.findElement(By.id(arrayButtonAlertInPage[1])).click();
     }
+
     @Step
-    @Description ("Метод проверки что всплывающее окно не отобразится спустя 4 секунды")
+    @Description("Метод проверки что всплывающее окно не отобразится спустя 4 секунды")
     public boolean isNotPresentAlertAfterFourSecond() {
         //ожидание на 4 секунды
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(4));
@@ -116,8 +124,9 @@ public class AlertsPage {
             return true;
         }
     }
+
     @Step
-    @Description ("Метод проверки что всплывающее окно  отобразится спустя 5 секунд")
+    @Description("Метод проверки что всплывающее окно  отобразится спустя 5 секунд")
     public boolean isPresentAlertAfterFiveSecond() {
         //ожидание на 5 секунд
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(5));
@@ -136,6 +145,7 @@ public class AlertsPage {
             return false;
         }
     }
+
     @Step
     @Description("Метод нажатия кнопки ок ,во всплывающем окне которое появляется спустя 5 секунд")
     public void clickingToButtonOkInAlertAfterFiveSecond() {
@@ -160,37 +170,38 @@ public class AlertsPage {
 
     @Step
     @Description("Метод что после нажатия кнопки ОК, всплывающее окно закрылось  и не отображается")
-    public boolean alertIsNotVisibleAfterClickingButtonOk(){
+    public boolean alertIsNotVisibleAfterClickingButtonOk() {
         //Ожидание секунда
-        WebDriverWait wait = new WebDriverWait(driver,Duration.ofSeconds(1));
-        try{
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(1));
+        try {
             //Ожидаем отображение алерта, если отображается возвращаем false
             wait.until(ExpectedConditions.alertIsPresent());
             Alert alert = driver.switchTo().alert();
             return false;
-        }catch (NoAlertPresentException e){
+        } catch (NoAlertPresentException e) {
             //если алерт не отобразился возвращаем true
             return true;
-        }catch (UnhandledAlertException e){
+        } catch (UnhandledAlertException e) {
             // если найден другой алерт возвращаем false
             return false;
-        } catch (TimeoutException e){
+        } catch (TimeoutException e) {
             //если алерт не отобразился  возвращаем true
             return true;
         }
     }
+
     @Step
     @Description("Метод проверки на соответствующий текст")
-    public boolean checkedTextInAlertVisibleAfterFiveSecond(){
-        WebDriverWait wait = new WebDriverWait(driver,Duration.ofSeconds(5));
+    public boolean checkedTextInAlertVisibleAfterFiveSecond() {
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(5));
         try {
             wait.until(ExpectedConditions.alertIsPresent());
             Alert alert = driver.switchTo().alert();
             String text = alert.getText();
-            if(text.equals("This alert appeared after 5 seconds")){
+            if (text.equals("This alert appeared after 5 seconds")) {
                 alert.accept();
                 return true;
-            }else{
+            } else {
                 return false;
             }//Обработка на случай если алерт не появился
         } catch (NoAlertPresentException e) {
@@ -198,8 +209,109 @@ public class AlertsPage {
         } catch (TimeoutException e) {
             // Обработка случая, когда алерт не появился в течение времени ожидания
             return false;
-        } catch (UnhandledAlertException e){
+        } catch (UnhandledAlertException e) {
             // Обработка случая, когда алерт ,блочит
+            return false;
+        }
+    }
+
+    @Step
+    @Description("Метод клика по кнопке, для того что бы появился алерт с вариантами выбора ОК или отменить")
+    public void clickButtonAlertWithChoise() {
+        driver.findElement(By.id(arrayButtonAlertInPage[2])).click();
+    }
+
+    @Step
+    @Description("Метод нажатия кнопки ОК в алерте с выбором")
+    public void clickingOkToAlertWithChoise() {
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(2));
+        try {
+            wait.until(ExpectedConditions.alertIsPresent());
+            Alert alert = driver.switchTo().alert();
+            alert.accept();
+        } catch (NoAlertPresentException e) {
+            System.out.println("Всплывающее окно не отобразилось");
+        } catch (UnhandledAlertException e) {
+            System.out.println("Имеется открытое всплывающее окно");
+        } catch (TimeoutException e) {
+            System.out.println("Упал по тайм-ауту");
+        }
+    }
+
+    @Step
+    @Description("Метод нажатия кнопки Отмена в алерте с выбором")
+    public void clickingCancelToAlertWithChoise() {
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(2));
+        try {
+            wait.until(ExpectedConditions.alertIsPresent());
+            Alert alert = driver.switchTo().alert();
+            alert.dismiss();
+        } catch (NoAlertPresentException e) {
+            System.out.println("Всплывающее окно не отобразилось");
+        } catch (UnhandledAlertException e) {
+            System.out.println("Имеется открытое всплывающее окно");
+        } catch (TimeoutException e) {
+            System.out.println("Упал по тайм-ауту");
+        }
+    }
+
+    @Step
+    @Description("Метод проверки что после нажатия кнопки ОК в алерте с выбором, алерт успешно закрывается")
+    public boolean checkingClosedAlertAfterClickingOkToAlertWithChoise() {
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(2));
+        try {
+            wait.until(ExpectedConditions.alertIsPresent());
+            return false;
+        } catch (NoAlertPresentException e) {
+            System.out.println("Всплывающее окно не отобразилось");
+            return true;
+        } catch (UnhandledAlertException e) {
+            System.out.println("Имеется открытое всплывающее окно");
+            return false;
+        } catch (TimeoutException e) {
+            return true;
+        }
+    }
+
+    @Step
+    @Description("Метод проверки что после нажатия кнопки ОК в алерте с выбором, алерт успешно закрывается")
+    public boolean checkingClosedAlertAfterClickingCancelToAlertWithChoise() {
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(2));
+        try {
+            wait.until(ExpectedConditions.alertIsPresent());
+            return false;
+        } catch (NoAlertPresentException e) {
+            System.out.println("Всплывающее окно не отобразилось");
+            return true;
+        } catch (UnhandledAlertException e) {
+            System.out.println("Имеется открытое всплывающее окно");
+            return false;
+        } catch (TimeoutException e) {
+            return true;
+        }
+    }
+
+    @Step
+    @Description("Метод проверки отображения текста в названии алерта на странице при нажатии кнопки ОК")
+    public boolean chekingTextAfterClickingOk() {
+        WebElement element = driver.findElement(locatorText);
+        String text = "You selected Ok";
+        if (element.getText().equals(text)){
+            return true;
+        }else{
+            System.out.println("Текст не совпадает");
+            return false;
+            }
+    }
+    @Step
+    @Description("Метод проверки отображения текста в названии алерта на странице при нажатии кнопки Отменить")
+    public boolean chekingTextAfterClickingCancel() {
+        WebElement element = driver.findElement(locatorText);
+        String text = "You selected Cancel";
+        if (element.getText().equals(text)){
+            return true;
+        }else{
+            System.out.println("Текст не совпадает");
             return false;
         }
     }

@@ -113,6 +113,59 @@ public class TestAlert {
         boolean expectedResult = objAlertsPage.checkedTextInAlertVisibleAfterFiveSecond();
         Assert.assertTrue("Тест не удался",expectedResult);
     }
+    @Test
+    @Description("Прямой сценарий обработки алерта с нажатием ОК ")
+     public void shouldAlertClickingOk() {
+        logger.info("Начало теста");
+        AlertsPage objAlertsPage = new AlertsPage(driver);
+        logger.info("Нажал слева кнопку алерт");
+        objAlertsPage.clickButtonAlertOnLeftWindow();
+        logger.info("Нажал на алерт");
+        objAlertsPage.clickButtonAlertWithChoise();
+        objAlertsPage.clickingOkToAlertWithChoise();
+        boolean expectedResult = objAlertsPage.checkingClosedAlertAfterClickingOkToAlertWithChoise();
+        Assert.assertTrue("Окно не закрылось", expectedResult);
+    }
+    @Test
+    @Description("Прямой сценарий обработки алерта с нажатием ОК ")
+    public void shouldAlertClickingCancel() {
+        logger.info("Начало теста");
+        AlertsPage objAlertsPage = new AlertsPage(driver);
+        logger.info("Нажал слева кнопку алерт");
+        objAlertsPage.clickButtonAlertOnLeftWindow();
+        logger.info("Нажал на алерт");
+        objAlertsPage.clickButtonAlertWithChoise();
+        objAlertsPage.clickingCancelToAlertWithChoise();
+        boolean expectedResult = objAlertsPage.checkingClosedAlertAfterClickingCancelToAlertWithChoise();
+        Assert.assertTrue("Окно не закрылось", expectedResult);
+    }
+    @Test
+    @Description("Прямой сценарий проверки текста после закрытия алерта с нажатием ОК ")
+    public void shouldCheckingTextAlertClickingOk() {
+        logger.info("Начало теста");
+        AlertsPage objAlertsPage = new AlertsPage(driver);
+        logger.info("Нажал слева кнопку алерт");
+        objAlertsPage.clickButtonAlertOnLeftWindow();
+        logger.info("Нажал на алерт");
+        objAlertsPage.clickButtonAlertWithChoise();
+        objAlertsPage.clickingOkToAlertWithChoise();
+        boolean expectedResult = objAlertsPage.chekingTextAfterClickingOk();
+        Assert.assertTrue("Текст не совпал", expectedResult);
+    }
+    @Test
+    @Description("Прямой сценарий проверки текста после закрытия алерта с нажатием Отмена ")
+    public void shouldCheckingTextAlertClickingCancel() {
+        logger.info("Начало теста");
+        AlertsPage objAlertsPage = new AlertsPage(driver);
+        logger.info("Нажал слева кнопку алерт");
+        objAlertsPage.clickButtonAlertOnLeftWindow();
+        logger.info("Нажал на алерт");
+        objAlertsPage.clickButtonAlertWithChoise();
+        objAlertsPage.clickingCancelToAlertWithChoise();
+        boolean expectedResult = objAlertsPage.chekingTextAfterClickingCancel();
+        Assert.assertTrue("Текст не совпал", expectedResult);
+    }
+
 
     @After
     public void quit(){
