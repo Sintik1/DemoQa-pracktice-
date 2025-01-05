@@ -2,14 +2,13 @@ package POM;
 
 import io.qameta.allure.Description;
 import io.qameta.allure.Step;
-import org.checkerframework.checker.units.qual.A;
 import org.openqa.selenium.*;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import java.time.Duration;
 
 public class AlertsPage {
-    private WebDriver driver;
+    private final WebDriver driver;
     private final By buttonAlerts = By.xpath(".//span[contains(text(),'Alerts')]");
 
     private final String[] arrayButtonAlertInPage = new String[]{
@@ -308,11 +307,46 @@ public class AlertsPage {
     public boolean chekingTextAfterClickingCancel() {
         WebElement element = driver.findElement(locatorText);
         String text = "You selected Cancel";
-        if (element.getText().equals(text)){
+        if (element.getText().equals(text)) {
             return true;
-        }else{
+        } else {
             System.out.println("Текст не совпадает");
             return false;
         }
     }
+        @Step
+        @Description("Метод проверки отображения алерта, при нажатии на кнопку click me")
+        public boolean alertWithChoiseIsVisble() {
+        WebDriverWait wait = new WebDriverWait(driver,Duration.ofSeconds(2));
+        try{
+            wait.until(ExpectedConditions.alertIsPresent());
+            return true;
+        }catch(NoAlertPresentException e ){
+            System.out.println("Окно не отобразилось");
+            return false;
+        }catch (UnhandledAlertException e ){
+            System.out.println("Открыто другое всплывающее окно");
+            return false;
+        } catch(TimeoutException e ){
+            System.out.println("ПО тайм-ауту алерт не отобразился");
+            return false;
+        }
+    }
+    @Step
+    @Description ("Метод проверки текста на соответсвие в алерте")
+    public String checkintTextAlertWithChoise(String text){
+        WebDriverWait wait = new WebDriverWait(driver,Duration.ofSeconds(2));
+        wait.until(ExpectedConditions.alertIsPresent());
+        Alert alert = driver.switchTo().alert();
+        String actualText = alert.getText();
+        if(actualText.equals(text)){
+            return actualText;
+        }else {
+            return "Текст не соответствует: Ожидаемый результат: "+text+" "+"Фактический результат: "+actualText;
+        }
+
+
+    }
+
+
 }

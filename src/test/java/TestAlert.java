@@ -165,8 +165,33 @@ public class TestAlert {
         boolean expectedResult = objAlertsPage.chekingTextAfterClickingCancel();
         Assert.assertTrue("Текст не совпал", expectedResult);
     }
+    @Test
+    @Description("Прямой сценарий проверки отображения алерта после нажатия кнопки click me")
+    public void shouldAlertWithChoiseIsVisible() {
+        logger.info("Начало теста");
+        AlertsPage objAlertsPage = new AlertsPage(driver);
+        logger.info("Нажал слева кнопку алерт");
+        objAlertsPage.clickButtonAlertOnLeftWindow();
+        logger.info("Нажал на алерт");
+        objAlertsPage.clickButtonAlertWithChoise();
+        boolean expectedResult = objAlertsPage.alertWithChoiseIsVisble();
+        Assert.assertTrue("Алерт не отобразился", expectedResult);
+    }
 
-
+    @Test
+    @Description("Сценарий проверки текста на соответствие тексту в  алерте")
+    public void shouldTextEqualAlertWithChoise(){
+     String expectedText = "Do you confirm action?";
+    logger.info("Начало теста");
+    AlertsPage objAlertsPage = new AlertsPage(driver);
+    logger.info("Нажал слева кнопку алерт");
+    objAlertsPage.clickButtonAlertOnLeftWindow();
+    logger.info("Нажал на алерт");
+    objAlertsPage.clickButtonAlertWithChoise();
+    logger.info("Проверяю текст");
+    String expectedResult= objAlertsPage.checkintTextAlertWithChoise(expectedText);
+    Assert.assertEquals("Текст не совпадает", expectedText,expectedResult);
+}
     @After
     public void quit(){
         driver.quit();
