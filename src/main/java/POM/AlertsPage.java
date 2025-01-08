@@ -6,6 +6,7 @@ import org.openqa.selenium.*;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import java.time.Duration;
+import java.util.List;
 
 public class AlertsPage {
     private final WebDriver driver;
@@ -296,13 +297,14 @@ public class AlertsPage {
     public boolean chekingTextAfterClickingOk() {
         WebElement element = driver.findElement(locatorConfirmText);
         String text = "You selected Ok";
-        if (element.getText().equals(text)){
+        if (element.getText().equals(text)) {
             return true;
-        }else{
+        } else {
             System.out.println("Текст не совпадает");
             return false;
-            }
+        }
     }
+
     @Step
     @Description("Метод проверки отображения текста в названии алерта на странице при нажатии кнопки Отменить")
     public boolean chekingTextAfterClickingCancel() {
@@ -315,95 +317,147 @@ public class AlertsPage {
             return false;
         }
     }
-        @Step
-        @Description("Метод проверки отображения алерта, при нажатии на кнопку click me")
-        public boolean alertWithChoiseIsVisble() {
-        WebDriverWait wait = new WebDriverWait(driver,Duration.ofSeconds(2));
-        try{
+
+    @Step
+    @Description("Метод проверки отображения алерта, при нажатии на кнопку click me")
+    public boolean alertWithChoiseIsVisble() {
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(2));
+        try {
             wait.until(ExpectedConditions.alertIsPresent());
             return true;
-        }catch(NoAlertPresentException e ){
+        } catch (NoAlertPresentException e) {
             System.out.println("Окно не отобразилось");
             return false;
-        }catch (UnhandledAlertException e ){
+        } catch (UnhandledAlertException e) {
             System.out.println("Открыто другое всплывающее окно");
             return false;
-        } catch(TimeoutException e ){
+        } catch (TimeoutException e) {
             System.out.println("ПО тайм-ауту алерт не отобразился");
             return false;
         }
     }
+
     @Step
-    @Description ("Метод проверки текста на соответсвие в алерте")
-    public String checkintTextAlertWithChoise(String text){
-        WebDriverWait wait = new WebDriverWait(driver,Duration.ofSeconds(2));
+    @Description("Метод проверки текста на соответсвие в алерте")
+    public String checkintTextAlertWithChoise(String text) {
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(2));
         wait.until(ExpectedConditions.alertIsPresent());
         Alert alert = driver.switchTo().alert();
         String actualText = alert.getText();
-        if(actualText.equals(text)){
+        if (actualText.equals(text)) {
             return actualText;
-        }else {
-            return "Текст не соответствует: Ожидаемый результат: "+text+" "+"Фактический результат: "+actualText;
+        } else {
+            return "Текст не соответствует: Ожидаемый результат: " + text + " " + "Фактический результат: " + actualText;
         }
     }
+
     @Step
     @Description("Метод клика по кнопке click me , алерта с полем для ввода")
-    public void clickAlertWithFieldEnter(){
+    public void clickAlertWithFieldEnter() {
         driver.findElement(By.id(arrayButtonAlertInPage[3])).click();
     }
+
     @Step
     @Description("Метод ввода текста в открытом алерте в поле для ввода")
-    public void sendTextInALertWithFieldEnter(String text){
-        WebDriverWait wait = new WebDriverWait(driver,Duration.ofSeconds(3));
-        try{
+    public void sendTextInALertWithFieldEnter(String text) {
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(3));
+        try {
             wait.until(ExpectedConditions.alertIsPresent());
             Alert alert = driver.switchTo().alert();
             alert.sendKeys(text);
             alert.accept();
-        }catch (NoAlertPresentException e){
+        } catch (NoAlertPresentException e) {
             System.out.println("Алерт не отобразился");
-        } catch (UnhandledAlertException e){
+        } catch (UnhandledAlertException e) {
             System.out.println("Открыт другой алерт");
-        } catch (TimeoutException e){
+        } catch (TimeoutException e) {
             System.out.println(" Не отобразился по тайм-ауту");
-            }
         }
+    }
+
     @Step
     @Description("Метод ввода текста в открытом алерте в поле для ввода")
-    public String getTextInAlertPromt (String expectedResult){
-       Alert alert = driver.switchTo().alert();
-       String actualResult = alert.getText();
-       if (alert.getText().equals(expectedResult)){
-           return actualResult;
-       }else{
-           return "Текст не соответствует: Ожидаемый результат: "+expectedResult+" "+"Фактический результат: "+actualResult;
-       }
+    public String getTextInAlertPromt(String expectedResult) {
+        Alert alert = driver.switchTo().alert();
+        String actualResult = alert.getText();
+        if (alert.getText().equals(expectedResult)) {
+            return actualResult;
+        } else {
+            return "Текст не соответствует: Ожидаемый результат: " + expectedResult + " " + "Фактический результат: " + actualResult;
+        }
 
     }
+
     @Step
     @Description("Метод проверки, что после нажатия кнопки ОК, Алерт успешно закрылся и не отображается")
-    public boolean alertPromtIsNotPresent(){
-        WebDriverWait wait =new WebDriverWait(driver,Duration.ofSeconds(2));
-        try{
+    public boolean alertPromtIsNotPresent() {
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(2));
+        try {
             wait.until(ExpectedConditions.alertIsPresent());
             return false;
-        }catch (NoAlertPresentException e){
+        } catch (NoAlertPresentException e) {
             return true;
-        } catch (UnhandledAlertException e ){
+        } catch (UnhandledAlertException e) {
             return false;
-        } catch (TimeoutException e){
+        } catch (TimeoutException e) {
             return true;
         }
     }
+
     @Step
     @Description("Метод пороверки отображения введенного текста на странице с алертом после нажатия ОК")
-    public boolean checkingTextInPageAlertAfterClickingOkInAlertPrompt(String sendText){
+    public boolean checkingTextInPageAlertAfterClickingOkInAlertPrompt(String sendText) {
         WebElement element = driver.findElement(locatorPromptText);
-        if (element.getText().equals("You entered" + " "+sendText)){
+        if (element.getText().equals("You entered" + " " + sendText)) {
             return true;
-        }else {
+        } else {
             System.out.println("Текст не совпадает");
             return false;
         }
     }
+
+    @Step
+    @Description("Метод проверки отображения элемента при отправке пустого поля")
+    public boolean presentIsEmptyText() {
+        try {
+            List<WebElement> elements = driver.findElements(locatorPromptText);
+            if (elements.isEmpty()) {
+                return true;
+            } else {
+                return false;
+            }
+        } catch (NoSuchElementException e) {
+            System.out.println("Элемент не найден: " + e.getMessage());
+            return true;
+        } catch (UnhandledAlertException e) {
+            System.out.println("Открыт другой алерт: " + e.getMessage());
+            return false;
+        } catch (TimeoutException e) {
+            System.out.println("Упал по тайм-ауту: " + e.getMessage());
+            return true;
+        } catch (Exception e) {
+            System.out.println("Произошла ошибка: " + e.getMessage());
+            return true;
+        }
     }
+    @Step
+    @Description("Метод закрытия алерта с вводом текста")
+    public void closedAlertPrompt(String sendText){
+        try{
+            WebDriverWait wait = new WebDriverWait(driver,Duration.ofSeconds(3));
+            wait.until(ExpectedConditions.alertIsPresent());
+            Alert alert = driver.switchTo().alert();
+            alert.sendKeys(sendText);
+            alert.dismiss();
+        } catch (NoAlertPresentException e){
+            System.out.println("Алерт  не найден: " + e.getMessage());
+        } catch (UnhandledAlertException e) {
+            System.out.println("Открыт другой алерт: " + e.getMessage());
+        } catch (TimeoutException e) {
+            System.out.println("Упал по тайм-ауту: " + e.getMessage());
+        } catch (Exception e) {
+            System.out.println("Произошла ошибка: " + e.getMessage());
+        }
+    }
+}
+

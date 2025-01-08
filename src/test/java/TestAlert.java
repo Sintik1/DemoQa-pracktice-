@@ -243,6 +243,70 @@ public class TestAlert {
         boolean expectedResult = objAlertsPage.checkingTextInPageAlertAfterClickingOkInAlertPrompt(sendText);
         Assert.assertTrue("Текст не совпадает введенному тексту", expectedResult);
     }
+
+    @Test
+    @Description("Негативный сценарий отправки пустого поля ,алерт должен закрыться")
+    public void checkedClosedAlertAfterEmptyInput() {
+        String sendText = "";
+        logger.info("Начало теста");
+        AlertsPage objAlertsPage = new AlertsPage(driver);
+        logger.info("Нажал слева кнопку алерт");
+        objAlertsPage.clickButtonAlertOnLeftWindow();
+        logger.info("Нажал на алерт");
+        objAlertsPage.clickAlertWithFieldEnter();
+        logger.info("Ввожу текст в алерт и нажимаю ок");
+        objAlertsPage.sendTextInALertWithFieldEnter(sendText);
+        boolean expectedResult = objAlertsPage.alertPromtIsNotPresent();
+        Assert.assertTrue("Алерт отобразился", expectedResult);
+    }
+
+    @Test
+    @Description("Негативный сценарий отправки пустого поля , в поле алерта не должно отображаться текста после нажатия ОК")
+    public void checkedEmptyInputInAlert() {
+        String sendText = "";
+        logger.info("Начало теста");
+        AlertsPage objAlertsPage = new AlertsPage(driver);
+        logger.info("Нажал слева кнопку алерт");
+        objAlertsPage.clickButtonAlertOnLeftWindow();
+        logger.info("Нажал на алерт");
+        objAlertsPage.clickAlertWithFieldEnter();
+        logger.info("Ввожу текст в алерт и нажимаю ок");
+        objAlertsPage.sendTextInALertWithFieldEnter(sendText);
+        boolean expectedResult = objAlertsPage.presentIsEmptyText();
+        Assert.assertTrue("Отобразился текст", expectedResult);
+    }
+
+    @Test
+    @Description("Негативный сценарий закрытия алерта после ввода текста, в поле алерта не должно отображаться текста после нажатия Отмена")
+    public void CancelAlertAfterTextInput() {
+        String sendText = "Тестовый текст";
+        logger.info("Начало теста");
+        AlertsPage objAlertsPage = new AlertsPage(driver);
+        logger.info("Нажал слева кнопку алерт");
+        objAlertsPage.clickButtonAlertOnLeftWindow();
+        logger.info("Нажал на алерт");
+        objAlertsPage.clickAlertWithFieldEnter();
+        logger.info("Ввожу текст в алерт и нажимаю ок");
+        objAlertsPage.closedAlertPrompt(sendText);
+        boolean expectedResult = objAlertsPage.presentIsEmptyText();
+        Assert.assertTrue("Отобразился текст", expectedResult);
+    }
+
+    @Test
+    @Description("Негативный сценарий закрытия алерта после ввода текста, в поле алерта не должно отображаться текста после нажатия Отмена")
+    public void isNotPresentAlertAfterClickCancel() {
+        String sendText = "Тестовый текст";
+        logger.info("Начало теста");
+        AlertsPage objAlertsPage = new AlertsPage(driver);
+        logger.info("Нажал слева кнопку алерт");
+        objAlertsPage.clickButtonAlertOnLeftWindow();
+        logger.info("Нажал на алерт");
+        objAlertsPage.clickAlertWithFieldEnter();
+        logger.info("Ввожу текст в алерт и нажимаю ок");
+        objAlertsPage.closedAlertPrompt(sendText);
+        boolean expectedResult = objAlertsPage.alertPromtIsNotPresent();
+        Assert.assertTrue("Отобразился алерт", expectedResult);
+    }
    @After
     public void quit(){
         driver.quit();
