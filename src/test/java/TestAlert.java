@@ -16,8 +16,8 @@ public class TestAlert {
     private static final Logger logger = LoggerFactory.getLogger(TestAlert.class);
 
     @Before
-    public void setup(){
-        driver= new ChromeDriver();
+    public void setup() {
+        driver = new ChromeDriver();
         driver.get(URI);
         driver.manage().window().maximize();
         HeadPage objHeadPage = new HeadPage(driver);
@@ -26,7 +26,7 @@ public class TestAlert {
 
     @Test
     @Description("Сценарий проверки отображения всплывающего окна")
-    public void shouldIsVisibleAlert(){
+    public void shouldIsVisibleAlert() {
         logger.info("Начало теста");
         AlertsPage objAlertsPage = new AlertsPage(driver);
         logger.info("Открываю страницу с алертами");
@@ -35,12 +35,12 @@ public class TestAlert {
         objAlertsPage.clickButtonAlert();
         logger.info("работаю с алертом");
         boolean alertIsVisible = objAlertsPage.windowAllertIsVisible();
-        Assert.assertTrue("Всплывающее окно не отобразилось",alertIsVisible);
+        Assert.assertTrue("Всплывающее окно не отобразилось", alertIsVisible);
     }
 
     @Test
     @Description("Прямой сценарий работы простого всплывающего окна, должен отобразится и при нажатии кнопки ОК закрыться")
-    public void shouldClickToButtonOkInAlert(){
+    public void shouldClickToButtonOkInAlert() {
         logger.info("Начало теста");
         AlertsPage objAlertsPage = new AlertsPage(driver);
         logger.info("Нажал слева кнопку алерт");
@@ -50,14 +50,14 @@ public class TestAlert {
         logger.info("нажал кнопку ок ");
         objAlertsPage.clickingOkInSimpleAlert();
         logger.info("проверяю что алерт не отображается");
-        boolean alertIsNotVisible=objAlertsPage.isNotPresentAlert();
-        Assert.assertTrue("Всплывающее окно отображается",alertIsNotVisible);
+        boolean alertIsNotVisible = objAlertsPage.isNotPresentAlert();
+        Assert.assertTrue("Всплывающее окно отображается", alertIsNotVisible);
         logger.info("Тест завершен");
     }
 
     @Test
     @Description("Сценарий проверки что всплывающее окно не отобразилось спустя 4 секунды")
-    public void checkedAlertDidNotAppearAfterFourSeconds(){
+    public void checkedAlertDidNotAppearAfterFourSeconds() {
         logger.info("Начало теста");
         AlertsPage objAlertsPage = new AlertsPage(driver);
         logger.info("Нажал слева кнопку алерт");
@@ -66,12 +66,12 @@ public class TestAlert {
         objAlertsPage.clickOnButtonWillAppearAfterFiveSeconds();
         logger.info("Проверяю что в течении 4 секунд не появится алерт");
         boolean alertIsNotVisible = objAlertsPage.isNotPresentAlertAfterFourSecond();
-        Assert.assertTrue("Всплывающее окно отобразилось",alertIsNotVisible);
+        Assert.assertTrue("Всплывающее окно отобразилось", alertIsNotVisible);
     }
 
     @Test
     @Description("Сценарий проверки что всплывающее окно не отобразилось спустя 4 секунды")
-    public void checkedAlertIsVisibleAfterFiveSeconds(){
+    public void checkedAlertIsVisibleAfterFiveSeconds() {
         logger.info("Начало теста");
         AlertsPage objAlertsPage = new AlertsPage(driver);
         logger.info("Нажал слева кнопку алерт");
@@ -80,13 +80,13 @@ public class TestAlert {
         objAlertsPage.clickOnButtonWillAppearAfterFiveSeconds();
         logger.info("Проверяю что в течении 5 секунд появится алерт");
         boolean alertIsNotVisible = objAlertsPage.isPresentAlertAfterFiveSecond();
-        Assert.assertTrue("Всплывающее окно  не отобразилось",alertIsNotVisible);
+        Assert.assertTrue("Всплывающее окно  не отобразилось", alertIsNotVisible);
         logger.info("Тест завершен");
     }
 
     @Test
     @Description("Сценарий проверки что всплывающее окно успешно закрывается при нажатии кнопки ОК")
-    public void checkedAlertIsClickingOk(){
+    public void checkedAlertIsClickingOk() {
         logger.info("Начало теста");
         AlertsPage objAlertsPage = new AlertsPage(driver);
         logger.info("Нажал слева кнопку алерт");
@@ -96,13 +96,13 @@ public class TestAlert {
         logger.info("Нажимаю кнопку ОК");
         objAlertsPage.clickingToButtonOkInAlertAfterFiveSecond();
         boolean alertIsNotVisibleAfterClosed = objAlertsPage.alertIsNotVisibleAfterClickingButtonOk();
-        Assert.assertTrue("Всплывающее окно отобразилось",alertIsNotVisibleAfterClosed);
+        Assert.assertTrue("Всплывающее окно отобразилось", alertIsNotVisibleAfterClosed);
         logger.info("Тест завершен");
     }
 
     @Test
     @Description("Проверка на соответствие текста")
-    public void checkedTextIsAlertFiveSecond(){
+    public void checkedTextIsAlertFiveSecond() {
         logger.info("Начало теста");
         AlertsPage objAlertsPage = new AlertsPage(driver);
         logger.info("Нажал слева кнопку алерт");
@@ -111,11 +111,12 @@ public class TestAlert {
         objAlertsPage.clickOnButtonWillAppearAfterFiveSeconds();
         logger.info("Проверяю текст на соответствие");
         boolean expectedResult = objAlertsPage.checkedTextInAlertVisibleAfterFiveSecond();
-        Assert.assertTrue("Тест не удался",expectedResult);
+        Assert.assertTrue("Тест не удался", expectedResult);
     }
+
     @Test
     @Description("Прямой сценарий обработки алерта с нажатием ОК ")
-     public void shouldAlertClickingOk() {
+    public void shouldAlertClickingOk() {
         logger.info("Начало теста");
         AlertsPage objAlertsPage = new AlertsPage(driver);
         logger.info("Нажал слева кнопку алерт");
@@ -126,6 +127,7 @@ public class TestAlert {
         boolean expectedResult = objAlertsPage.checkingClosedAlertAfterClickingOkToAlertWithChoise();
         Assert.assertTrue("Окно не закрылось", expectedResult);
     }
+
     @Test
     @Description("Прямой сценарий обработки алерта с нажатием ОК ")
     public void shouldAlertClickingCancel() {
@@ -139,6 +141,7 @@ public class TestAlert {
         boolean expectedResult = objAlertsPage.checkingClosedAlertAfterClickingCancelToAlertWithChoise();
         Assert.assertTrue("Окно не закрылось", expectedResult);
     }
+
     @Test
     @Description("Прямой сценарий проверки текста после закрытия алерта с нажатием ОК ")
     public void shouldCheckingTextAlertClickingOk() {
@@ -152,6 +155,7 @@ public class TestAlert {
         boolean expectedResult = objAlertsPage.chekingTextAfterClickingOk();
         Assert.assertTrue("Текст не совпал", expectedResult);
     }
+
     @Test
     @Description("Прямой сценарий проверки текста после закрытия алерта с нажатием Отмена ")
     public void shouldCheckingTextAlertClickingCancel() {
@@ -165,6 +169,7 @@ public class TestAlert {
         boolean expectedResult = objAlertsPage.chekingTextAfterClickingCancel();
         Assert.assertTrue("Текст не совпал", expectedResult);
     }
+
     @Test
     @Description("Прямой сценарий проверки отображения алерта после нажатия кнопки click me")
     public void shouldAlertWithChoiseIsVisible() {
@@ -180,22 +185,69 @@ public class TestAlert {
 
     @Test
     @Description("Сценарий проверки текста на соответствие тексту в  алерте")
-    public void shouldTextEqualAlertWithChoise(){
-     String expectedText = "Do you confirm action?";
-    logger.info("Начало теста");
-    AlertsPage objAlertsPage = new AlertsPage(driver);
-    logger.info("Нажал слева кнопку алерт");
-    objAlertsPage.clickButtonAlertOnLeftWindow();
-    logger.info("Нажал на алерт");
-    objAlertsPage.clickButtonAlertWithChoise();
-    logger.info("Проверяю текст");
-    String expectedResult= objAlertsPage.checkintTextAlertWithChoise(expectedText);
-    Assert.assertEquals("Текст не совпадает", expectedText,expectedResult);
-}
-    @After
+    public void shouldTextEqualAlertWithChoise() {
+        String expectedText = "Do you confirm action?";
+        logger.info("Начало теста");
+        AlertsPage objAlertsPage = new AlertsPage(driver);
+        logger.info("Нажал слева кнопку алерт");
+        objAlertsPage.clickButtonAlertOnLeftWindow();
+        logger.info("Нажал на алерт");
+        objAlertsPage.clickButtonAlertWithChoise();
+        logger.info("Проверяю текст");
+        String expectedResult = objAlertsPage.checkintTextAlertWithChoise(expectedText);
+        Assert.assertEquals("Текст не совпадает", expectedText, expectedResult);
+    }
+
+    @Test
+    @Description("Прямой сценарий проверки ввода текста в алерт с полем для ввода")
+    public void shouldEnterTextInAlert() {
+        logger.info("Начало теста");
+        AlertsPage objAlertsPage = new AlertsPage(driver);
+        logger.info("Нажал слева кнопку алерт");
+        objAlertsPage.clickButtonAlertOnLeftWindow();
+        logger.info("Нажал на алерт");
+        objAlertsPage.clickAlertWithFieldEnter();
+        logger.info("Ввожу текст в алерт и нажимаю ок");
+        objAlertsPage.sendTextInALertWithFieldEnter("Тестовый текст");
+        boolean expectedResult = objAlertsPage.alertPromtIsNotPresent();
+        Assert.assertTrue("Алерт отображается,тест провален", expectedResult);
+    }
+
+    @Test
+    @Description("Прямой сценарий проверки  текста в алерт с полем для ввода ,текст должен совпадать")
+    public void getTextInAlertWithClickingOk() {
+        String actualText = "Please enter your name";
+        logger.info("Начало теста");
+        AlertsPage objAlertsPage = new AlertsPage(driver);
+        logger.info("Нажал слева кнопку алерт");
+        objAlertsPage.clickButtonAlertOnLeftWindow();
+        logger.info("Нажал на алерт");
+        objAlertsPage.clickAlertWithFieldEnter();
+        logger.info("Ввожу текст в алерт и нажимаю ок");
+        String expectedResult = objAlertsPage.getTextInAlertPromt(actualText);
+        Assert.assertEquals("Текст не совпадает ,тест провален", expectedResult, actualText);
+    }
+
+    @Test
+    @Description("Прямой сценарий проверки ввода текста в алерт с полем для ввода,после нажатия кнопки ок должен отобразится в поле ассерта")
+    public void checkedSendTextInAlert() {
+        String sendText = "Тестовый текст";
+        logger.info("Начало теста");
+        AlertsPage objAlertsPage = new AlertsPage(driver);
+        logger.info("Нажал слева кнопку алерт");
+        objAlertsPage.clickButtonAlertOnLeftWindow();
+        logger.info("Нажал на алерт");
+        objAlertsPage.clickAlertWithFieldEnter();
+        logger.info("Ввожу текст в алерт и нажимаю ок");
+        objAlertsPage.sendTextInALertWithFieldEnter(sendText);
+        boolean expectedResult = objAlertsPage.checkingTextInPageAlertAfterClickingOkInAlertPrompt(sendText);
+        Assert.assertTrue("Текст не совпадает введенному тексту", expectedResult);
+    }
+   @After
     public void quit(){
         driver.quit();
     }
-}
+    }
+
 
 

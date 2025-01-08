@@ -17,7 +17,8 @@ public class AlertsPage {
             "confirmButton",
             "promtButton"
     };
-    private final By locatorText = By.id("confirmResult");
+    private final By locatorConfirmText = By.id("confirmResult");
+    private final By locatorPromptText = By.id("promptResult");
 
     public AlertsPage(WebDriver driver) {
         this.driver = driver;
@@ -293,7 +294,7 @@ public class AlertsPage {
     @Step
     @Description("Метод проверки отображения текста в названии алерта на странице при нажатии кнопки ОК")
     public boolean chekingTextAfterClickingOk() {
-        WebElement element = driver.findElement(locatorText);
+        WebElement element = driver.findElement(locatorConfirmText);
         String text = "You selected Ok";
         if (element.getText().equals(text)){
             return true;
@@ -305,7 +306,7 @@ public class AlertsPage {
     @Step
     @Description("Метод проверки отображения текста в названии алерта на странице при нажатии кнопки Отменить")
     public boolean chekingTextAfterClickingCancel() {
-        WebElement element = driver.findElement(locatorText);
+        WebElement element = driver.findElement(locatorConfirmText);
         String text = "You selected Cancel";
         if (element.getText().equals(text)) {
             return true;
@@ -344,9 +345,65 @@ public class AlertsPage {
         }else {
             return "Текст не соответствует: Ожидаемый результат: "+text+" "+"Фактический результат: "+actualText;
         }
-
+    }
+    @Step
+    @Description("Метод клика по кнопке click me , алерта с полем для ввода")
+    public void clickAlertWithFieldEnter(){
+        driver.findElement(By.id(arrayButtonAlertInPage[3])).click();
+    }
+    @Step
+    @Description("Метод ввода текста в открытом алерте в поле для ввода")
+    public void sendTextInALertWithFieldEnter(String text){
+        WebDriverWait wait = new WebDriverWait(driver,Duration.ofSeconds(3));
+        try{
+            wait.until(ExpectedConditions.alertIsPresent());
+            Alert alert = driver.switchTo().alert();
+            alert.sendKeys(text);
+            alert.accept();
+        }catch (NoAlertPresentException e){
+            System.out.println("Алерт не отобразился");
+        } catch (UnhandledAlertException e){
+            System.out.println("Открыт другой алерт");
+        } catch (TimeoutException e){
+            System.out.println(" Не отобразился по тайм-ауту");
+            }
+        }
+    @Step
+    @Description("Метод ввода текста в открытом алерте в поле для ввода")
+    public String getTextInAlertPromt (String expectedResult){
+       Alert alert = driver.switchTo().alert();
+       String actualResult = alert.getText();
+       if (alert.getText().equals(expectedResult)){
+           return actualResult;
+       }else{
+           return "Текст не соответствует: Ожидаемый результат: "+expectedResult+" "+"Фактический результат: "+actualResult;
+       }
 
     }
-
-
-}
+    @Step
+    @Description("Метод проверки, что после нажатия кнопки ОК, Алерт успешно закрылся и не отображается")
+    public boolean alertPromtIsNotPresent(){
+        WebDriverWait wait =new WebDriverWait(driver,Duration.ofSeconds(2));
+        try{
+            wait.until(ExpectedConditions.alertIsPresent());
+            return false;
+        }catch (NoAlertPresentException e){
+            return true;
+        } catch (UnhandledAlertException e ){
+            return false;
+        } catch (TimeoutException e){
+            return true;
+        }
+    }
+    @Step
+    @Description("Метод пороверки отображения введенного текста на странице с алертом после нажатия ОК")
+    public boolean checkingTextInPageAlertAfterClickingOkInAlertPrompt(String sendText){
+        WebElement element = driver.findElement(locatorPromptText);
+        if (element.getText().equals("You entered" + " "+sendText)){
+            return true;
+        }else {
+            System.out.println("Текст не совпадает");
+            return false;
+        }
+    }
+    }
