@@ -1,5 +1,6 @@
 import POM.AlertsPage;
 import POM.HeadPage;
+import io.github.bonigarcia.wdm.WebDriverManager;
 import io.qameta.allure.Description;
 import org.junit.After;
 import org.junit.Assert;
@@ -17,6 +18,7 @@ public class TestAlert {
 
     @Before
     public void setup() {
+        WebDriverManager.chromedriver().setup();
         driver = new ChromeDriver();
         driver.get(URI);
         driver.manage().window().maximize();

@@ -1,5 +1,6 @@
 import POM.FormsHead;
 import POM.HeadPage;
+import io.github.bonigarcia.wdm.WebDriverManager;
 import io.qameta.allure.Description;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.junit.After;
@@ -61,6 +62,7 @@ public class TestForms {
 
     @Before
     public void setup(){
+        WebDriverManager.chromedriver().setup();
         driver= new ChromeDriver();
         driver.get(URI);
         driver.manage().window().maximize();
