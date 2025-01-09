@@ -60,9 +60,12 @@ public class TestForms {
 
     @Before
     public void setup(){
-        System.setProperty("webdriver.chrome.driver", "src/main/java/POM/resources/chromedriver.exe");
-        ChromeOptions chromeOptions =new ChromeOptions();
-        driver=new ChromeDriver(chromeOptions);
+        WebDriverManager.chromedriver().setup(); // Используем WebDriverManager для управления драйверами
+        ChromeOptions chromeOptions = new ChromeOptions();
+        chromeOptions.addArguments("--headless"); // Запуск в headless режиме, если необходимо
+        chromeOptions.addArguments("--no-sandbox");
+        chromeOptions.addArguments("--disable-dev-shm-usage");
+        driver = new ChromeDriver(chromeOptions);
         driver.get(URI);
         driver.manage().window().maximize();
         HeadPage objHeadPage = new HeadPage(driver);

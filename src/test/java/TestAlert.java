@@ -9,32 +9,38 @@ import org.junit.Test;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+
 
 public class TestAlert {
-    WebDriver driver;
-    public static final String URI = "https://demoqa.com/";
+    private WebDriver driver;
+    private static final String BASE_URL = "https://demoqa.com/";
 
     @Before
     public void setup() {
-        System.setProperty("webdriver.chrome.driver", "src/main/java/POM/resources/chromedriver.exe");
-        ChromeOptions chromeOptions =new ChromeOptions();
-        driver=new ChromeDriver(chromeOptions);
-        driver.get(URI);
+        WebDriverManager.chromedriver().setup(); // Используем WebDriverManager для управления драйверами
+        ChromeOptions chromeOptions = new ChromeOptions();
+        chromeOptions.addArguments("--headless"); // Запуск в headless режиме, если необходимо
+        chromeOptions.addArguments("--no-sandbox");
+        chromeOptions.addArguments("--disable-dev-shm-usage");
+
+        driver = new ChromeDriver(chromeOptions);
         driver.manage().window().maximize();
-        HeadPage objHeadPage = new HeadPage(driver);
-        objHeadPage.clickButtonAllert();
+        navigateToAlertsPage();
+    }
+
+    private void navigateToAlertsPage() {
+        driver.get(BASE_URL);
+        HeadPage headPage = new HeadPage(driver);
+        headPage.clickButtonAllert();
     }
 
     @Test
-    @Description("Сценарий проверки отображения всплывающего окна")
-    public void shouldIsVisibleAlert() {
-        AlertsPage objAlertsPage = new AlertsPage(driver);
-        objAlertsPage.clickButtonAlertOnLeftWindow();
-        objAlertsPage.clickButtonAlert();
-        boolean alertIsVisible = objAlertsPage.windowAllertIsVisible();
-        Assert.assertTrue("Всплывающее окно не отобразилось", alertIsVisible);
+    @Description("Проверка отображения всплывающего окна")
+    public void testAlertIsVisible() {
+        AlertsPage alertsPage = new AlertsPage(driver);
+        alertsPage.clickButtonAlertOnLeftWindow();
+        alertsPage.clickButtonAlert();
+        Assert.assertTrue("Всплывающее окно не отобразилось", alertsPage.windowAllertIsVisible());
     }
 
     @Test
