@@ -26,11 +26,12 @@ public class AlertsPage {
     }
 
     @Step
-    @Description("Клик по кнопке Alert для отображения списка кнопок оконо")
+    @Description("Клик по кнопке Alert для отображения списка кнопок окон")
     public void clickButtonAlertOnLeftWindow() {
-        WebElement element = driver.findElement(buttonAlerts);
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(2));
+        WebElement element = wait.until(ExpectedConditions.visibilityOfElementLocated(buttonAlerts));
         ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView();", element);
-        driver.findElement(buttonAlerts).click();
+        element.click();
     }
 
     @Step
