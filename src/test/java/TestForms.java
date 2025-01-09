@@ -11,15 +11,12 @@ import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 @RunWith(Parameterized.class)
 public class TestForms {
     WebDriver driver;
     public static final String URI = "https://demoqa.com/";
     static int length = 9;
-    private static final Logger logger = LoggerFactory.getLogger(TestForms.class);
     private final String name;
     private final String lastName;
     private final String email;
