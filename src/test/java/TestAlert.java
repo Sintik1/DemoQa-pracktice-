@@ -8,6 +8,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -17,8 +18,9 @@ public class TestAlert {
 
     @Before
     public void setup() {
-        WebDriverManager.chromedriver().setup();
-        driver= new ChromeDriver();
+        System.setProperty("webdriver.chrome.driver", "src/main/java/POM/resources/chromedriver.exe");
+        ChromeOptions chromeOptions =new ChromeOptions();
+        driver=new ChromeDriver(chromeOptions);
         driver.get(URI);
         driver.manage().window().maximize();
         HeadPage objHeadPage = new HeadPage(driver);

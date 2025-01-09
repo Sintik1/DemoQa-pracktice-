@@ -11,6 +11,7 @@ import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
 
 @RunWith(Parameterized.class)
 public class TestForms {
@@ -59,8 +60,9 @@ public class TestForms {
 
     @Before
     public void setup(){
-        WebDriverManager.chromedriver().setup();
-        driver= new ChromeDriver();
+        System.setProperty("webdriver.chrome.driver", "src/main/java/POM/resources/chromedriver.exe");
+        ChromeOptions chromeOptions =new ChromeOptions();
+        driver=new ChromeDriver(chromeOptions);
         driver.get(URI);
         driver.manage().window().maximize();
         HeadPage objHeadPage = new HeadPage(driver);
