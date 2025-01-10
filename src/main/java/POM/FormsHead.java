@@ -161,7 +161,7 @@ public class FormsHead {
         //  driver.findElement(By.id("datePickerId")).click(); // Замените на правильный локатор для открытия календаря
 
         // Ожидаем, пока элемент станет видимым
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(20));
+        WebDriverWait wait = new WebDriverWait(driver, 10);
         WebElement dayElement = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//div[contains(@class, 'react-datepicker__day') and text()='"+day+"'][1]")));
         // Кликаем на нужный день
         dayElement.click();
@@ -181,7 +181,7 @@ public class FormsHead {
     }
 
     public void sendFieldSubject(String subject) {
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        WebDriverWait wait = new WebDriverWait(driver, 10);
 
         try {
             // Ожидание видимости элемента ввода
@@ -218,7 +218,7 @@ public class FormsHead {
 
     public void clickButtonPicture() {
         //driver.findElement(uploadFile).click();
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        WebDriverWait wait = new WebDriverWait(driver, 10);
         WebElement uploadButton = wait.until(ExpectedConditions.elementToBeClickable(By.xpath(".//label[@class='form-file-label' and contains(text(),'Select picture')]")));
         ((JavascriptExecutor) driver).executeScript("arguments[0].click();", uploadButton);
 
@@ -258,7 +258,7 @@ public class FormsHead {
     }
 
     public boolean tableFormIsDisplayed() {
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(2));
+        WebDriverWait wait = new WebDriverWait(driver, 2);
         try {
             WebElement element = wait.until(ExpectedConditions.visibilityOfElementLocated(tableForms));
             return element.isDisplayed();

@@ -28,7 +28,7 @@ public class AlertsPage {
     @Step
     @Description("Клик по кнопке Alert для отображения списка кнопок окон")
     public void clickButtonAlertOnLeftWindow() {
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(2));
+        WebDriverWait wait = new WebDriverWait(driver, 5);
         WebElement element = wait.until(ExpectedConditions.visibilityOfElementLocated(buttonAlerts));
         ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView();", element);
         element.click();
@@ -47,11 +47,10 @@ public class AlertsPage {
             //нажимаем кнопку, которая вызывает окно
             driver.findElement(By.id(arrayButtonAlertInPage[0])).click();
             //ожидаем пока аллерт станет доступным
-            WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(5));
+            WebDriverWait wait = new WebDriverWait(driver, 5);
             wait.until(ExpectedConditions.alertIsPresent());
             //переключаемся на аллерт
             Alert alert = driver.switchTo().alert();
-            driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(5));
             // Получаем текст из алерта
             String text = alert.getText();
             //сравниваем текст
@@ -109,7 +108,7 @@ public class AlertsPage {
     @Description("Метод проверки что всплывающее окно не отобразится спустя 4 секунды")
     public boolean isNotPresentAlertAfterFourSecond() {
         //ожидание на 4 секунды
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(4));
+        WebDriverWait wait = new WebDriverWait(driver, 4);
         try {
             //Если алерт найден то возвращается исключение
             wait.until(ExpectedConditions.alertIsPresent());
@@ -131,7 +130,7 @@ public class AlertsPage {
     @Description("Метод проверки что всплывающее окно  отобразится спустя 5 секунд")
     public boolean isPresentAlertAfterFiveSecond() {
         //ожидание на 5 секунд
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(5));
+        WebDriverWait wait = new WebDriverWait(driver, 5);
         try {
             //Если алерт найден то возвращается исключение
             wait.until(ExpectedConditions.alertIsPresent());
@@ -152,7 +151,7 @@ public class AlertsPage {
     @Description("Метод нажатия кнопки ок ,во всплывающем окне которое появляется спустя 5 секунд")
     public void clickingToButtonOkInAlertAfterFiveSecond() {
         //Ожидание 5 секунд
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(5));
+        WebDriverWait wait = new WebDriverWait(driver, 5);
         try {
             //Ожидаем появления всплывающего окна, если появилось успешно закрываем
             wait.until(ExpectedConditions.alertIsPresent());
@@ -174,7 +173,7 @@ public class AlertsPage {
     @Description("Метод что после нажатия кнопки ОК, всплывающее окно закрылось  и не отображается")
     public boolean alertIsNotVisibleAfterClickingButtonOk() {
         //Ожидание секунда
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(1));
+        WebDriverWait wait = new WebDriverWait(driver, 1);
         try {
             //Ожидаем отображение алерта, если отображается возвращаем false
             wait.until(ExpectedConditions.alertIsPresent());
@@ -195,7 +194,7 @@ public class AlertsPage {
     @Step
     @Description("Метод проверки на соответствующий текст")
     public boolean checkedTextInAlertVisibleAfterFiveSecond() {
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(5));
+        WebDriverWait wait = new WebDriverWait(driver, 5);
         try {
             wait.until(ExpectedConditions.alertIsPresent());
             Alert alert = driver.switchTo().alert();
@@ -226,7 +225,7 @@ public class AlertsPage {
     @Step
     @Description("Метод нажатия кнопки ОК в алерте с выбором")
     public void clickingOkToAlertWithChoise() {
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(2));
+        WebDriverWait wait = new WebDriverWait(driver, 2);
         try {
             wait.until(ExpectedConditions.alertIsPresent());
             Alert alert = driver.switchTo().alert();
@@ -243,7 +242,7 @@ public class AlertsPage {
     @Step
     @Description("Метод нажатия кнопки Отмена в алерте с выбором")
     public void clickingCancelToAlertWithChoise() {
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(2));
+        WebDriverWait wait = new WebDriverWait(driver, 2);
         try {
             wait.until(ExpectedConditions.alertIsPresent());
             Alert alert = driver.switchTo().alert();
@@ -260,7 +259,7 @@ public class AlertsPage {
     @Step
     @Description("Метод проверки что после нажатия кнопки ОК в алерте с выбором, алерт успешно закрывается")
     public boolean checkingClosedAlertAfterClickingOkToAlertWithChoise() {
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(2));
+        WebDriverWait wait = new WebDriverWait(driver, 2);
         try {
             wait.until(ExpectedConditions.alertIsPresent());
             return false;
@@ -278,7 +277,7 @@ public class AlertsPage {
     @Step
     @Description("Метод проверки что после нажатия кнопки ОК в алерте с выбором, алерт успешно закрывается")
     public boolean checkingClosedAlertAfterClickingCancelToAlertWithChoise() {
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(2));
+        WebDriverWait wait = new WebDriverWait(driver, 2);
         try {
             wait.until(ExpectedConditions.alertIsPresent());
             return false;
@@ -322,7 +321,7 @@ public class AlertsPage {
     @Step
     @Description("Метод проверки отображения алерта, при нажатии на кнопку click me")
     public boolean alertWithChoiseIsVisble() {
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(2));
+        WebDriverWait wait = new WebDriverWait(driver, 2);
         try {
             wait.until(ExpectedConditions.alertIsPresent());
             return true;
@@ -341,7 +340,7 @@ public class AlertsPage {
     @Step
     @Description("Метод проверки текста на соответсвие в алерте")
     public String checkintTextAlertWithChoise(String text) {
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(2));
+        WebDriverWait wait = new WebDriverWait(driver, 2);
         wait.until(ExpectedConditions.alertIsPresent());
         Alert alert = driver.switchTo().alert();
         String actualText = alert.getText();
@@ -361,7 +360,7 @@ public class AlertsPage {
     @Step
     @Description("Метод ввода текста в открытом алерте в поле для ввода")
     public void sendTextInALertWithFieldEnter(String text) {
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(3));
+        WebDriverWait wait = new WebDriverWait(driver, 3);
         try {
             wait.until(ExpectedConditions.alertIsPresent());
             Alert alert = driver.switchTo().alert();
@@ -392,7 +391,7 @@ public class AlertsPage {
     @Step
     @Description("Метод проверки, что после нажатия кнопки ОК, Алерт успешно закрылся и не отображается")
     public boolean alertPromtIsNotPresent() {
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(2));
+        WebDriverWait wait = new WebDriverWait(driver, 2);
         try {
             wait.until(ExpectedConditions.alertIsPresent());
             return false;
@@ -445,7 +444,7 @@ public class AlertsPage {
     @Description("Метод закрытия алерта с вводом текста")
     public void closedAlertPrompt(String sendText){
         try{
-            WebDriverWait wait = new WebDriverWait(driver,Duration.ofSeconds(3));
+            WebDriverWait wait = new WebDriverWait(driver,3);
             wait.until(ExpectedConditions.alertIsPresent());
             Alert alert = driver.switchTo().alert();
             alert.sendKeys(sendText);
