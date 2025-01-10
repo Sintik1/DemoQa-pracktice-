@@ -11,12 +11,6 @@ public class AlertsPage {
     private final WebDriver driver;
     private final By buttonAlerts = By.xpath(".//span[contains(text(),'Alerts')]");
 
-   /* private final String[] arrayButtonAlertInPage = new String[]{
-            "alertButton",
-            "timerAlertButton",
-            "confirmButton",
-            "promtButton"
-    };*/
     public enum AlertButton{
        ALERT_BUTTON("alertButton"),
        TIMER_ALERT_BUTTON("timerAlertButton"),
@@ -117,7 +111,6 @@ public class AlertsPage {
             // если найден другой алерт возвращаем false
             return false;
         }
-
     }
 
     @Step

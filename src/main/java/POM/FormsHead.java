@@ -15,11 +15,7 @@ public class FormsHead {
     private By fieldLastName = By.xpath(".//input[@id='lastName']");
 
     private By fieldEmail = By.xpath(".//input[@id='userEmail']");
-   /* public static final String [] arrayButtonGender = new String[]{
-            ".//label[@class ='custom-control-label'and contains(text(),'Male')]",
-            ".//label[@class ='custom-control-label'and contains(text(),'Female')]",
-            ".//label[@class ='custom-control-label'and contains(text(),'Other')]"
-    };*/
+
     public enum ButtonGender{
         MALE(".//label[@class ='custom-control-label'and contains(text(),'Male')]"),
         FEMALE(".//label[@class ='custom-control-label'and contains(text(),'Female')]"),
@@ -47,11 +43,6 @@ public class FormsHead {
 
     private By buttonSubmit = By.xpath(".//button[@id='submit']");
 
-    /*public static final String [] arrayButtonHobbies = new String[]{
-            ".//label[@class ='custom-control-label'and contains(text(),'Sport')]",
-            ".//label[@class ='custom-control-label'and contains(text(),'Reading')]",
-            ".//label[@class ='custom-control-label'and contains(text(),'Music')]"
-    };*/
     public enum ButtonHobbies{
         SPORT(".//label[@class ='custom-control-label'and contains(text(),'Sport')]"),
         READING(".//label[@class ='custom-control-label'and contains(text(),'Reading')]"),
@@ -72,12 +63,7 @@ public class FormsHead {
     private By dropListState = By.xpath(".//div[text()='Select State']");
     private By dropListCity = By.xpath(".//div[text()='Select City']");
     private By tableForms = By.xpath(".//div[@class='table-responsive']");
-    /*public static final String[] arrayListOfState = new String[]{
-            "react-select-3-option-0",
-            "react-select-3-option-1",
-            "react-select-3-option-2",
-            "react-select-3-option-3"
-    };*/
+
     public enum ListState{
         STATE_ONE("react-select-3-option-0"),
         STATE_TWO("react-select-3-option-1"),
@@ -94,11 +80,7 @@ public class FormsHead {
             return id;
         }
     }
-   /* public static final String[] arrayListOfCity = new String[]{
-            "react-select-4-option-0",
-            "react-select-4-option-1",
-            "react-select-4-option-2"
-    };*/
+
     public enum ListCity{
         CITY_ONE("react-select-4-option-0"),
        CITY_TWO("react-select-4-option-1"),
