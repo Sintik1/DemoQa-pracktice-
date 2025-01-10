@@ -17,12 +17,8 @@ public class TestAlert {
 
     @Before
     public void setup() {
-        WebDriverManager.chromedriver().setup(); // Используем WebDriverManager для управления драйверами
-        ChromeOptions chromeOptions = new ChromeOptions();
-        chromeOptions.addArguments("--headless"); // Запуск в headless режиме, если необходимо
-
-
-        driver = new ChromeDriver(chromeOptions);
+        WebDriverManager.chromedriver().arch64().setup(); // Используем WebDriverManager для управления драйверами
+        driver = new ChromeDriver();
         driver.manage().window().maximize();
         navigateToAlertsPage();
     }
