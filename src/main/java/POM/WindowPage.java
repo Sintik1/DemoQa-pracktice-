@@ -52,7 +52,7 @@ public class WindowPage {
             //Cоздаем итератор для перебора всех окон
             Iterator<String> iterator = allWindowHandles.iterator();
 
-            // Здесь мы проверим, есть ли у дочернего окна другие дочерние окна, и получим заголовок дочернего окна
+            // Здесь мы проверим, есть ли у дочернего окна другие дочерние окна, и проверим отображение  дочернего окна
             while (iterator.hasNext()) {
                 String childWindow = iterator.next();
                 if (!mainWindowHandle.equalsIgnoreCase(childWindow)) {
@@ -68,6 +68,32 @@ public class WindowPage {
             }
         //если окно не содержит элемент
         return false;
+    }
+
+    @Step("Метод проверки текста, в новом дочернем окне")
+    public String checkedTextNewWindow(){
+        //Записали индентификатор главного окна
+        String mainWindowHandle = driver.getWindowHandle();
+        //Записали все окна включая дочерние
+        Set<String>allHandleWindows = driver.getWindowHandles();
+        //Cоздаем итератор для перебора всех окон
+        Iterator<String>iterator= allHandleWindows.iterator();
+
+        // Здесь мы проверим, есть ли у дочернего окна другие дочерние окна, и проверим заголовок  дочернего окна
+        while (iterator.hasNext()){
+            String childWindow = iterator.next();
+            if(!mainWindowHandle.equalsIgnoreCase(childWindow)){
+                driver.switchTo().window(childWindow);
+                WebDriverWait wait = new WebDriverWait(driver,10);
+            try {
+                wait.until(ExpectedConditions.visibilityOfElementLocated(newWindowSelector));
+                String actualText = driver.findElement(newWindowSelector).getText();
+                return actualText;
+            }catch (Exception e){
+                handleException(e);
+            }
+            }
+        }return "Текст отличается , тест не удался";
     }
     @Step("Вспомогательный метод обработки исключений")
      public void handleException(Exception e){

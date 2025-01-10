@@ -47,5 +47,15 @@ public class TestWindows {
         boolean isDisplayedWindow = objWindowsPage.setWindowInList();
         Assert.assertTrue("Окно не отобразилось",isDisplayedWindow);
     }
+    @Test
+    @DisplayName("Сценарий проверки отображения текста в новом окне")
+    public void testTextInNewTable(){
+        String expectedText = "This is a sample page";
+        WindowPage objWindowsPage = new WindowPage(driver);
+        objWindowsPage.clickButtonBrowserWindows();
+        objWindowsPage.clickButtonWindows(buttonWindows);
+        String actualText = objWindowsPage.checkedTextNewWindow();
+        Assert.assertEquals("Текст отличается : ",expectedText,actualText);
+    }
 
 }
