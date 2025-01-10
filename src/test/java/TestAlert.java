@@ -17,8 +17,12 @@ public class TestAlert {
 
     @Before
     public void setup() {
-        WebDriverManager.chromedriver().arch64().setup(); // Используем WebDriverManager для управления драйверами
-        driver = new ChromeDriver();
+        WebDriverManager.chromedriver().setup(); // Используем WebDriverManager для управления драйверами
+        ChromeOptions chromeOptions = new ChromeOptions();
+        chromeOptions.addArguments("--headless"); // Запуск в headless режиме, если необходимо
+        chromeOptions.addArguments("--no-sandbox");
+        chromeOptions.addArguments("--disable-dev-shm-usage");
+        driver = new ChromeDriver(chromeOptions);
         driver.manage().window().maximize();
         navigateToAlertsPage();
     }

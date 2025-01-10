@@ -1,16 +1,9 @@
 package POM;
 
 import io.qameta.allure.Step;
-
-import org.junit.Assert;
 import org.openqa.selenium.*;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
-
-import java.time.Duration;
-
-import java.util.Random;
-
 
 public class FormsHead {
     private WebDriver driver;
@@ -22,11 +15,26 @@ public class FormsHead {
     private By fieldLastName = By.xpath(".//input[@id='lastName']");
 
     private By fieldEmail = By.xpath(".//input[@id='userEmail']");
-    public static final String [] arrayButtonGender = new String[]{
+   /* public static final String [] arrayButtonGender = new String[]{
             ".//label[@class ='custom-control-label'and contains(text(),'Male')]",
             ".//label[@class ='custom-control-label'and contains(text(),'Female')]",
             ".//label[@class ='custom-control-label'and contains(text(),'Other')]"
-    };
+    };*/
+    public enum ButtonGender{
+        MALE(".//label[@class ='custom-control-label'and contains(text(),'Male')]"),
+        FEMALE(".//label[@class ='custom-control-label'and contains(text(),'Female')]"),
+       OTHER(".//label[@class ='custom-control-label'and contains(text(),'Other')]");
+
+        private String xpath;
+
+       ButtonGender(String xpath) {
+           this.xpath = xpath;
+       }
+
+       public String getXpath() {
+           return xpath;
+       }
+   }
     private By fieldUserNumber = By.xpath(".//input[@id='userNumber']");
 
     private By fieldDateBirth = By.xpath(".//input[@id='dateOfBirthInput']");
@@ -39,31 +47,73 @@ public class FormsHead {
 
     private By buttonSubmit = By.xpath(".//button[@id='submit']");
 
-    private By radioButtonSport = By.xpath(".//label[@class ='custom-control-label'and contains(text(),'Sport')]");
-    private By radioButtonReading = By.xpath(".//label[@class ='custom-control-label'and contains(text(),'Reading')]");
-    private By radioButtonMusic = By.xpath(".//label[@class ='custom-control-label'and contains(text(),'Music')]");
-    public static final String [] arrayButtonHobbies = new String[]{
+    /*public static final String [] arrayButtonHobbies = new String[]{
             ".//label[@class ='custom-control-label'and contains(text(),'Sport')]",
             ".//label[@class ='custom-control-label'and contains(text(),'Reading')]",
             ".//label[@class ='custom-control-label'and contains(text(),'Music')]"
-    };
+    };*/
+    public enum ButtonHobbies{
+        SPORT(".//label[@class ='custom-control-label'and contains(text(),'Sport')]"),
+        READING(".//label[@class ='custom-control-label'and contains(text(),'Reading')]"),
+        MUSIC(".//label[@class ='custom-control-label'and contains(text(),'Music')]");
+
+        private String xpath;
+
+        ButtonHobbies(String xpath){
+            this.xpath=xpath;
+        }
+        public String getXpath(){
+            return xpath;
+        }
+    }
     private By uploadFile = By.xpath(".//label[@class='form-file-label'and contains(text(),'Select picture')]");
 
     private By fieldCurrentAdress = By.xpath(".//textarea[@placeholder='Current Address']");
     private By dropListState = By.xpath(".//div[text()='Select State']");
     private By dropListCity = By.xpath(".//div[text()='Select City']");
     private By tableForms = By.xpath(".//div[@class='table-responsive']");
-    public static final String[] arrayListOfState = new String[]{
+    /*public static final String[] arrayListOfState = new String[]{
             "react-select-3-option-0",
             "react-select-3-option-1",
             "react-select-3-option-2",
             "react-select-3-option-3"
-    };
-    public static final String[] arrayListOfCity = new String[]{
+    };*/
+    public enum ListState{
+        STATE_ONE("react-select-3-option-0"),
+        STATE_TWO("react-select-3-option-1"),
+        STATE_THREE( "react-select-3-option-2"),
+        STATE_FOUR("react-select-3-option-3");
+
+        private String id;
+
+        ListState(String id) {
+            this.id = id;
+        }
+
+        public String getId() {
+            return id;
+        }
+    }
+   /* public static final String[] arrayListOfCity = new String[]{
             "react-select-4-option-0",
             "react-select-4-option-1",
             "react-select-4-option-2"
-    };
+    };*/
+    public enum ListCity{
+        CITY_ONE("react-select-4-option-0"),
+       CITY_TWO("react-select-4-option-1"),
+       CITY_THREE("react-select-4-option-2");
+
+        private String id;
+
+        ListCity(String id){
+            this.id=id;
+        }
+        public String getId(){
+            return id;
+        }
+   }
+
 
 
     public FormsHead(WebDriver driver) {
@@ -72,47 +122,46 @@ public class FormsHead {
 
     @Step
     public void clickButtonHomePage(){
-        driver.findElement(buttonHomePage).click();
+        click(buttonHomePage);
     }
 
     @Step
     public void clickButtonPracticeForm() {
-        driver.findElement(buttonForm).click();
+        click(buttonForm);
     }
 
     @Step
     public void clickFieldName() {
-        driver.findElement(fieldName).click();
+        click(fieldName);
     }
 
     @Step
     public void sendFieldName(String name) {
-        driver.findElement(fieldName).sendKeys(name);
+        sendKeys(fieldName,name);
     }
-
     @Step
     public void clickFieldLastName() {
-        driver.findElement(fieldLastName).click();
+        click(fieldLastName);
     }
 
     @Step
     public void sendFieldLastName(String lastName) {
-        driver.findElement(fieldLastName).sendKeys(lastName);
+        sendKeys(fieldLastName,lastName);
     }
 
     @Step
     public void clickFieldEmail() {
-        driver.findElement(fieldEmail).click();
+        click(fieldEmail);
     }
 
     @Step
     public void sendFieldEmail(String email) {
-        driver.findElement(fieldEmail).sendKeys(email);
+        sendKeys(fieldEmail,email);
     }
 
     @Step
-    public void clickButtonGender(String arrayButtonGender) {
-        driver.findElement(By.xpath(arrayButtonGender)).click();
+    public void clickButtonGender(String gender) {
+        click(By.xpath(gender));
     }
 
     @Step
@@ -123,53 +172,40 @@ public class FormsHead {
 
     @Step
     public void clickFieldUserNumber() {
-        driver.findElement(fieldUserNumber).click();
+        click(fieldUserNumber);
     }
 
     @Step
     public void sendFieldUserNumber(String phoneNumber) {
-        driver.findElement(fieldUserNumber).sendKeys(phoneNumber);
+        sendKeys(fieldUserNumber,phoneNumber);
     }
 
     @Step
     public void clickFieldDateBirth() {
-        driver.findElement(fieldDateBirth).click();
+        click(fieldDateBirth);
     }
 
     public void clickListMonth() {
-        driver.findElement(listMonth).click();
+        click(listMonth);
 
     }
 
     public void choiseMonth(String monthValue) {
-        driver.findElement(listMonth).sendKeys(monthValue);
-
-        //Select dropdown = new Select(dropdownElement);
-        //dropdown.selectByValue(monthValue);
+       sendKeys(listMonth,monthValue);
     }
 
     public void choiseYear(String yearsValue) {
-        //WebElement dropdownElement =
-        driver.findElement(listYear).sendKeys(yearsValue);
-        //Select dropdown = new Select(dropdownElement);
-        //dropdown.selectByValue(yearsValue);
+       sendKeys(listYear,yearsValue);
     }
 
 
     public void selectDate(String day) {
-        // Открываем календарь
-        //  driver.findElement(By.id("datePickerId")).click(); // Замените на правильный локатор для открытия календаря
-
         // Ожидаем, пока элемент станет видимым
         WebDriverWait wait = new WebDriverWait(driver, 10);
         WebElement dayElement = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//div[contains(@class, 'react-datepicker__day') and text()='"+day+"'][1]")));
         // Кликаем на нужный день
         dayElement.click();
     }
-    //Select dayElement = new Select(dayButton);
-    //dayElement.selectByValue(day);
-
-
 
     public void scrollPageToSubmit() {
         WebElement element = driver.findElement(buttonSubmit);
@@ -177,7 +213,7 @@ public class FormsHead {
     }
 
     public void clickFieldSubject() {
-        driver.findElement(fieldSubject).click();
+        click(fieldSubject);
     }
 
     public void sendFieldSubject(String subject) {
@@ -212,12 +248,11 @@ public class FormsHead {
         }
     }
 
-    public void clickButtonHobbies(String arrayButtonHobbies) {
-        driver.findElement(By.xpath(arrayButtonHobbies)).click();
+    public void clickButtonHobbies(String hobbies) {
+        click(By.xpath(hobbies));
     }
 
     public void clickButtonPicture() {
-        //driver.findElement(uploadFile).click();
         WebDriverWait wait = new WebDriverWait(driver, 10);
         WebElement uploadButton = wait.until(ExpectedConditions.elementToBeClickable(By.xpath(".//label[@class='form-file-label' and contains(text(),'Select picture')]")));
         ((JavascriptExecutor) driver).executeScript("arguments[0].click();", uploadButton);
@@ -230,31 +265,31 @@ public class FormsHead {
 
 
     public void clickFieldCurrentAdress() {
-        driver.findElement(fieldCurrentAdress).click();
+        click(fieldCurrentAdress);
     }
 
     public void sendFieldCurrentAdress(String sendComment) {
-        driver.findElement(fieldCurrentAdress).sendKeys(sendComment);
+        sendKeys(fieldCurrentAdress,sendComment);
     }
 
     public void clickDropListState() {
-        driver.findElement(dropListState).click();
+        click(dropListState);
     }
 
-    public void clickDropListStateArray(String arrayListOfState) {
-        driver.findElement(By.id(arrayListOfState)).click();
+    public void clickDropListStateArray(String listState) {
+        click(By.id(listState));
     }
 
     public void clickDropListCity() {
-        driver.findElement(dropListCity).click();
+        click(dropListCity);
     }
 
-    public void choiseDropListCityArray(String arrayListOfCity) {
-        driver.findElement(By.id(arrayListOfCity)).click();
+    public void choiseDropListCityArray(String listCity) {
+        click(By.id(listCity));
     }
 
     public void clickButtonSubmit() {
-        driver.findElement(buttonSubmit).click();
+        click(buttonSubmit);
     }
 
     public boolean tableFormIsDisplayed() {
@@ -269,6 +304,13 @@ public class FormsHead {
             System.out.println("Элемент таблицы не найден.");
             return false;
         }
+
+    }
+    private void click(By locator) {
+        driver.findElement(locator).click();
+    }
+    private void sendKeys(By locator,String keys){
+        driver.findElement(locator).sendKeys(keys);
     }
 }
 

@@ -11,13 +11,11 @@ import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.chrome.ChromeOptions;
-
 @RunWith(Parameterized.class)
 public class TestForms {
-    WebDriver driver;
-    public static final String URI = "https://demoqa.com/";
-    static int length = 9;
+    private static final String URI = "https://demoqa.com/";
+    private WebDriver driver;
+
     private final String name;
     private final String lastName;
     private final String email;
@@ -32,8 +30,9 @@ public class TestForms {
     private final String stateLocator;
     private final String cityLocator;
 
-    public TestForms(String name, String lastName, String email, String gender, String phoneNumber, String monthValue, String yearsValue, String day, String subject, String hobbies, String sendComment, String stateLocator, String cityLocator) {
-
+    public TestForms(String name, String lastName, String email, String gender, String phoneNumber,
+                     String monthValue, String yearsValue, String day, String subject,
+                     String hobbies, String sendComment, String stateLocator, String cityLocator) {
         this.name = name;
         this.lastName = lastName;
         this.email = email;
@@ -42,28 +41,51 @@ public class TestForms {
         this.monthValue = monthValue;
         this.yearsValue = yearsValue;
         this.day = day;
-        this.subject=subject;
-        this.hobbies=hobbies;
-        this.sendComment=sendComment;
-        this.stateLocator=stateLocator;
-        this.cityLocator=cityLocator;
+        this.subject = subject;
+        this.hobbies = hobbies;
+        this.sendComment = sendComment;
+        this.stateLocator = stateLocator;
+        this.cityLocator = cityLocator;
     }
 
     @Parameterized.Parameters
-    public static Object[][]getTestData(){
+    public static Object[][] getTestData() {
         return new Object[][]{
-                {"Тест","Тест", RandomStringUtils.randomAlphabetic(3,6)+"@mail.com",FormsHead.arrayButtonGender[0],"9"+RandomStringUtils.random(length, "0123456789"),RandomStringUtils.randomAlphanumeric(1 ,12),"1999","24","English",FormsHead.arrayButtonHobbies[0],"Комментарий заполнения",FormsHead.arrayListOfState[0],FormsHead.arrayListOfCity[1]},
-                {"Тесто","Тесто", RandomStringUtils.randomAlphabetic(3,6)+"@mail.com",FormsHead.arrayButtonGender[1],"9"+RandomStringUtils.random(length, "0123456789"),RandomStringUtils.randomAlphanumeric(1 ,12),"1998","10","History",FormsHead.arrayButtonHobbies[1],"Коммент тестовый",FormsHead.arrayListOfState[1],FormsHead.arrayListOfCity[0]},
-                {"Тестовый","Тестовый", RandomStringUtils.randomAlphabetic(3,6)+"@mail.com",FormsHead.arrayButtonGender[2],"9"+RandomStringUtils.random(length, "0123456789"),RandomStringUtils.randomAlphanumeric(1 ,12),"2001","1","Chemistry",FormsHead.arrayButtonHobbies[2],"Комментарий тестовый",FormsHead.arrayListOfState[2],FormsHead.arrayListOfCity[1]}
+                {"Тест", "Тест", generateEmail(), FormsHead.ButtonGender.MALE.getXpath(), generatePhoneNumber(),
+                        generateRandomMonth(), "1999", "24", "English",
+                        FormsHead.ButtonHobbies.SPORT.getXpath(), "Комментарий заполнения",
+                        FormsHead.ListState.STATE_ONE.getId(), FormsHead.ListCity.CITY_THREE.getId()},
+                {"Тесто", "Тесто", generateEmail(), FormsHead.ButtonGender.FEMALE.getXpath(), generatePhoneNumber(),
+                        generateRandomMonth(), "1998", "10", "History",
+                        FormsHead.ButtonHobbies.READING.getXpath(), "Коммент тестовый",
+                        FormsHead.ListState.STATE_TWO.getId(), FormsHead.ListCity.CITY_ONE.getId()},
+                {"Тестовый", "Тестовый", generateEmail(), FormsHead.ButtonGender.OTHER.getXpath(), generatePhoneNumber(),
+                        generateRandomMonth(), "2001", "1", "Chemistry",
+                        FormsHead.ButtonHobbies.MUSIC.getXpath(), "Комментарий тестовый",
+                        FormsHead.ListState.STATE_THREE.getId(), FormsHead.ListCity.CITY_TWO.getId()}
         };
     }
 
+    private static String generateEmail() {
+        return RandomStringUtils.randomAlphabetic(3, 6) + "@mail.com";
+    }
+
+    private static String generatePhoneNumber() {
+        return "9" + RandomStringUtils.random(9, "0123456789");
+    }
+
+    private static String generateRandomMonth() {
+        return RandomStringUtils.randomAlphanumeric(1, 12);
+    }
+
     @Before
-    public void setup(){
-        WebDriverManager.chromedriver().arch64().setup(); // Используем WebDriverManager для управления драйверами
+    public void setup() {
+        WebDriverManager.chromedriver().setup(); // Используем WebDriverManager для управления драйверами
         driver = new ChromeDriver();
-        driver.get(URI);
         driver.manage().window().maximize();
+        driver.get(URI);
+
+        // Переход на форму
         HeadPage objHeadPage = new HeadPage(driver);
         objHeadPage.clickButtonForms();
     }
@@ -71,28 +93,43 @@ public class TestForms {
     @Test
     @Description("Сценарий перехода на главную страницу по кнопке в хедере, при нажатии должен произойти переход на главную страницу")
     public void transitionHomePage() {
+        // Инкапсуляция логики взаимодействия с формами
         FormsHead objFormsHead = new FormsHead(driver);
         objFormsHead.clickButtonPracticeForm();
         objFormsHead.clickButtonHomePage();
+
         HeadPage objHeadPage = new HeadPage(driver);
         boolean isDisplayedHeadPage = objHeadPage.headPageIsDisplayed();
-        Assert.assertTrue("Страница не отобразилась",isDisplayedHeadPage);
+        Assert.assertTrue("Страница не отобразилась", isDisplayedHeadPage);
     }
+
 
     @Test
     @Description("Негативный сценарий отправки и заполнения формы регистрации с не заполнеными данными,после нажатия кнопки отправки модальное окно не должно отображаться")
     public void submittingAnEmptyForm(){
         FormsHead objFormsHead = new FormsHead(driver);
-        objFormsHead.clickButtonPracticeForm();
         objFormsHead.scrollPageToSubmit();
         objFormsHead.clickButtonSubmit();
-        boolean isNotDisplayedModalWindow =objFormsHead.tableFormIsDisplayed();
+
+        boolean isNotDisplayedModalWindow = objFormsHead.tableFormIsDisplayed();
         Assert.assertFalse("Модальное окно отобразилось", isNotDisplayedModalWindow);
     }
 
     @Test
-    @Description("Прямой сценарий отправки и заполнения формы регистрации,должно успешно отобразится модальное окно с введенными данными")
-    public void testFormSubmissionSuccessMessage() {
+    @Description("Прямой сценарий отправки и заполнения формы регистрации, должно успешно отобразится модальное окно с введенными данными")
+    public void successfulFormSubmission() {
+        fillForm();
+
+        // Отправка формы
+        FormsHead objFormsHead = new FormsHead(driver);
+        objFormsHead.clickButtonSubmit();
+
+        boolean isDisplayedModalWindow = objFormsHead.tableFormIsDisplayed();
+        Assert.assertTrue("Модальное окно не отобразилось", isDisplayedModalWindow);
+    }
+
+    // Вспомогательный метод для заполнения формы
+    private void fillForm() {
         FormsHead objFormsHead = new FormsHead(driver);
         objFormsHead.clickButtonPracticeForm();
         objFormsHead.clickFieldName();
@@ -102,30 +139,32 @@ public class TestForms {
         objFormsHead.clickFieldEmail();
         objFormsHead.sendFieldEmail(email);
         objFormsHead.clickButtonGender(gender);
+
         objFormsHead.scrollToPhoneNumber();
         objFormsHead.clickFieldUserNumber();
         objFormsHead.sendFieldUserNumber(phoneNumber);
-        objFormsHead.scrollPageToSubmit();
+
+        // Дата рождения
         objFormsHead.clickFieldDateBirth();
         objFormsHead.clickListMonth();
         objFormsHead.choiseMonth(monthValue);
         objFormsHead.choiseYear(yearsValue);
         objFormsHead.selectDate(day);
+
         objFormsHead.clickFieldSubject();
         objFormsHead.sendFieldSubject(subject);
         objFormsHead.clickButtonHobbies(hobbies);
         objFormsHead.clickButtonPicture();
         objFormsHead.clickFieldCurrentAdress();
         objFormsHead.sendFieldCurrentAdress(sendComment);
+
+        // Выбор местоположения
         objFormsHead.clickDropListState();
         objFormsHead.clickDropListStateArray(stateLocator);
         objFormsHead.clickDropListCity();
         objFormsHead.choiseDropListCityArray(cityLocator);
-        objFormsHead.clickButtonSubmit();
-        boolean isDisplayedModalWindow =objFormsHead.tableFormIsDisplayed();
-        Assert.assertTrue("Модальное окно не отобразилось",isDisplayedModalWindow);
     }
-    @After
+   @After
     public void quit(){
         driver.quit();
     }
