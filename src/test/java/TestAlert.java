@@ -9,6 +9,8 @@ import org.junit.Test;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
+import org.openqa.selenium.opera.OperaDriver;
+import org.openqa.selenium.opera.OperaOptions;
 
 
 public class TestAlert {
@@ -17,12 +19,17 @@ public class TestAlert {
 
     @Before
     public void setup() {
-        WebDriverManager.chromedriver().setup(); // Используем WebDriverManager для управления драйверами
-        ChromeOptions chromeOptions = new ChromeOptions();
-        chromeOptions.addArguments("--headless"); // Запуск в headless режиме, если необходимо
-        chromeOptions.addArguments("--no-sandbox");
-        chromeOptions.addArguments("--disable-dev-shm-usage");
-        driver = new ChromeDriver(chromeOptions);
+        /*WebDriverManager.chromedriver().setup();
+        ChromeOptions options = new ChromeOptions();
+        options.addArguments("--disable-extensions");
+        options.addArguments("--headless");
+        driver=new ChromeDriver(options);*/
+        WebDriverManager.operadriver().setup();
+        OperaOptions operaOptions = new OperaOptions();
+        operaOptions.addArguments("--headless"); // Запуск в headless режиме, если необходимо
+        operaOptions.addArguments("--no-sandbox");
+        operaOptions.addArguments("--disable-dev-shm-usage");
+        driver = new OperaDriver(operaOptions);
         driver.manage().window().maximize();
         navigateToAlertsPage();
     }

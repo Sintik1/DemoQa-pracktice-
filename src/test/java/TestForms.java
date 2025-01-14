@@ -11,6 +11,9 @@ import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.opera.OperaDriver;
+import org.openqa.selenium.opera.OperaOptions;
+
 @RunWith(Parameterized.class)
 public class TestForms {
     private static final String URI = "https://demoqa.com/";
@@ -80,8 +83,17 @@ public class TestForms {
 
     @Before
     public void setup() {
-        WebDriverManager.chromedriver().setup(); // Используем WebDriverManager для управления драйверами
-        driver = new ChromeDriver();
+         /*WebDriverManager.chromedriver().setup();
+        ChromeOptions options = new ChromeOptions();
+        options.addArguments("--disable-extensions");
+        options.addArguments("--headless");
+        driver=new ChromeDriver(options);*/
+        WebDriverManager.operadriver().setup();
+        OperaOptions operaOptions = new OperaOptions();
+        operaOptions.addArguments("--headless"); // Запуск в headless режиме, если необходимо
+        operaOptions.addArguments("--no-sandbox");
+        operaOptions.addArguments("--disable-dev-shm-usage");
+        driver = new OperaDriver(operaOptions);
         driver.manage().window().maximize();
         driver.get(URI);
 
