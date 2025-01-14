@@ -24,7 +24,7 @@ public class TestAlert {
         options.addArguments("--disable-extensions");
         options.addArguments("--headless");
         driver=new ChromeDriver(options);*/
-        WebDriverManager.operadriver().setup();
+        System.setProperty("webdriver.opera.driver","src/main/java/resources/operadriver.exe");
         OperaOptions operaOptions = new OperaOptions();
         operaOptions.addArguments("--headless"); // Запуск в headless режиме, если необходимо
         operaOptions.addArguments("--no-sandbox");
